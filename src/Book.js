@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import './App.css';
 
 
 const Book = props => {
-    const { id, title, author, rented, returned, renter, rentedAt } = props.bookData
+    const { id, title, author, rented, renter, rentedAt } = props.bookData
     
     return (
         <div className='book'>

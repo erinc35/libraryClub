@@ -43,35 +43,28 @@ class Books extends Component {
             clonedBooks[ind].rentedAt = new Date().toISOString().slice(0, 10)
             this.setState({ rentFormShown: false, books: clonedBooks, currentRenter: renter })
         }else {
-            console.log(this.state.currentRenter);
             clonedBooks[ind].returned = true;
             clonedBooks[ind].renter = '';
             clonedBooks[ind].rentedAt = ''
             let currentRenter = this.state.currentRenter;
             if (currentRenter.username !== renter.username || currentRenter.memberNo !== renter.memberNo){
-                console.log('hata vvar');
-                
                 this.setState({ ...this.state.books, error: 'Please check the username or memberNo'})
             }else{
-                console.log('hata yok');
                 clonedBooks[ind].rented = false;                
                 clonedBooks[ind].renting = false;                
                 this.setState({ rentFormShown: false, books: clonedBooks, error: '', currentRenter: '' })
             }
         }
         
-        // console.log(clonedBooks);
     }
 
     render() { 
-        const { books, rentFormShown, renter, currentRenter, error, currentEvent } = this.state;
-        const availableBooks = books.filter(book => !book.rented)
+        const { books, rentFormShown, currentRenter, error } = this.state;
         const rentingBook = books.filter(book => book.renting)
 
         return ( 
             <div className='main-wrapper'>
                 <div className='forms'>
-                        {/* <button>Rent a book</button> */}
                     {rentFormShown ? <RentForm rentingBook={rentingBook} updateBook={this.updateBook} currentRenter={currentRenter} error={error} /> : null}
                 </div>
                 <div className='books-wrapper'>   

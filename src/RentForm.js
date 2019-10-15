@@ -19,7 +19,7 @@ class RentForm extends Component {
     }
 
     render() { 
-        const { rentingBook, updateBook, currentRenter, error } = this.props
+        const { rentingBook, updateBook, error } = this.props
         const { renter } = this.state
         
         return ( 
