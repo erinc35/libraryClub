@@ -19,18 +19,19 @@ class RentForm extends Component {
     }
 
     render() { 
-        const { rentingBook, addBook } = this.props
+        const { rentingBook, updateBook, currentRenter, error } = this.props
         const { renter } = this.state
         
         return ( 
             <div className='form-wrapper'>
                 <div className='form'>
-                    <h4>Renting {rentingBook[0].title }</h4>
+                    {rentingBook[0] ? <h4>Updating {rentingBook[0].title }</h4> : null}
                     <input onChange={this.handleInput} type="text" name="username" placeholder="Username" 
                         value={this.state.renter.username}/>
                     <input onChange={this.handleInput} type="text" name="memberNo" placeholder="Membership No." 
                         value={this.state.renter.memberNo}/>       
-                    <button onClick={() => addBook(rentingBook[0].id, renter)}>Rent</button>             
+                    <button onClick={() => updateBook(rentingBook[0].id, renter)}>Update</button>    
+                    {error.length > 0 ? <p className='error'>{error}</p> : null}         
                 </div>
             </div>
          );
