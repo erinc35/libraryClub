@@ -5,28 +5,33 @@ class RentForm extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            username: '',
-            memberNo: ''
+            renter: {username: '', memberNo: ''}
          }
     }
 
     handleInput = e => {
         this.setState({
-            [e.target.name]: e.target.value
+            renter: {
+                ...this.state.renter,
+                [e.target.name]: e.target.value
+            }
         })
     }
 
     render() { 
-        console.log(this.props.rentingBook);
+        const { rentingBook, addBook } = this.props
+        const { renter } = this.state
         
         return ( 
             <div className='form-wrapper'>
-                <form className='form'>
-                    <h4>Renting {this.props.rentingBook[0].title}</h4>
-                    <input onChange={this.handleInput} type="text" name="username" placeholder="Username" value={this.state.username}/>
-                    <input onChange={this.handleInput} type="text" name="memberNo" placeholder="Membership No." value={this.state.memberNo}/>       
-                    <button type="submit">Rent</button>             
-                </form>
+                <div className='form'>
+                    <h4>Renting {rentingBook[0].title }</h4>
+                    <input onChange={this.handleInput} type="text" name="username" placeholder="Username" 
+                        value={this.state.renter.username}/>
+                    <input onChange={this.handleInput} type="text" name="memberNo" placeholder="Membership No." 
+                        value={this.state.renter.memberNo}/>       
+                    <button onClick={() => addBook(rentingBook[0].id, renter)}>Rent</button>             
+                </div>
             </div>
          );
     }

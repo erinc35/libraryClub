@@ -21,6 +21,7 @@ class Books extends Component {
 
     toggleRentForm = (id) => {
         let clonedBooks = this.state.books.slice();
+        //clear all 'rentings' because user might have closed the form by clicking another book
         clonedBooks.map(book => book.renting = false)
         const ind = clonedBooks.findIndex(book => book.id === id)
         clonedBooks[ind].renting = !clonedBooks[ind].renting;
@@ -30,29 +31,27 @@ class Books extends Component {
         }))
     }
 
-    updateBook = (id) => {
+    addBook = (id, renter) => {
         let clonedBooks = this.state.books.slice();
         const ind = clonedBooks.findIndex(book => book.id === id)
         clonedBooks[ind].rented = true;
-        clonedBooks[ind].returned = false;        
-        this.setState({ books: clonedBooks})
+        clonedBooks[ind].returned = false;   
+        clonedBooks[ind].renting = false;  
+        clonedBooks[ind].renter = renter;                                                
+        console.log(clonedBooks);
+        this.setState({ rentFormShown: false, books: clonedBooks })
     }
 
     render() { 
         const { books, rentFormShown } = this.state;
         const availableBooks = books.filter(book => !book.rented)
         const rentingBook = books.filter(book => book.renting)
+
         return ( 
             <div className='main-wrapper'>
                 <div className='forms'>
-                    <div className='rent-form'>
                         {/* <button>Rent a book</button> */}
-                        {rentFormShown ? <RentForm rentingBook={rentingBook}/> : null}
-                    </div>
-                    <div className='return-form'>
-                        {/* <button>Return a book</button> */}
-
-                    </div>
+                        {rentFormShown ? <RentForm rentingBook={rentingBook} addBook={this.addBook}/> : null}
                 </div>
                 <div className='books-wrapper'>   
                     {books.map(book => {
