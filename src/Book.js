@@ -10,7 +10,8 @@ const Book = props => {
             <h2>{title}</h2>
             <h4>{author}</h4>   
             <button onClick={() => props.toggleRentForm(id)}>{!rented ? 'Rent' : 'Return'}</button> 
-            {renter.username || '' }     
+            {rented ? <p> Renting by {renter.username} </p> : null}
+            
         </div>
     )
 }
