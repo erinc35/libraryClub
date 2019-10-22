@@ -9,11 +9,11 @@ class Books extends Component {
         super(props);
         this.state = { 
             books: [
-                { id: 1, title: 'The Lord of the Rings ', author: 'J.R.R. Tolkien',renting: false, rented: false, returned: true, renter: '', rentedAt: '', promisedReturnDate: '' },
-                { id: 2, title: 'Harry Potter', author: 'JK Rowling',renting: false, rented: false, returned: true, renter: '', rentedAt: '', promisedReturnDate: '' },
-                { id: 3, title: '1984', author: 'George Orwell',renting: false, rented: false, returned: true, renter: '', rentedAt: '', promisedReturnDate: '' },
-                { id: 4, title: 'The Brothers Karamazov', author: 'Fyodor Dostoyevski',renting: false, rented: false, returned: true, renter: '', rentedAt: '', promisedReturnDate: '' },
-                { id: 5, title: 'The Trial', author: 'Franz Kafka',renting: false, rented: false, returned: true, renter: '', rentedAt: '', promisedReturnDate: '' }
+                { id: 1, title: 'The Lord of the Rings ', author: 'J.R.R. Tolkien',renting: false, rented: false, returned: true, renter: '', rentedAt: '' },
+                { id: 2, title: 'Harry Potter', author: 'JK Rowling',renting: false, rented: false, returned: true, renter: '', rentedAt: '' },
+                { id: 3, title: '1984', author: 'George Orwell',renting: false, rented: false, returned: true, renter: '', rentedAt: '' },
+                { id: 4, title: 'The Brothers Karamazov', author: 'Fyodor Dostoyevski',renting: false, rented: false, returned: true, renter: '', rentedAt: '' },
+                { id: 5, title: 'The Trial', author: 'Franz Kafka',renting: false, rented: false, returned: true, renter: '', rentedAt: '' }
             ],
             rentFormShown: false,
             error: '',

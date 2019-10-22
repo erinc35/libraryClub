@@ -4,6 +4,7 @@ import './App.css';
 
 const Book = props => {
     const { id, title, author, rented, renter, rentedAt } = props.bookData
+    // console.log(p);
     
     return (
         <div className='book'>
@@ -14,8 +15,7 @@ const Book = props => {
                 <div>
                     <p> Renting by {renter.username} </p> 
                     <p> Rented at {rentedAt} </p> 
-                    {/* <p> Promised return date {returnDate} </p>                      */}
-                                        
+                    <p> Promised return {renter.promisedReturnDate} </p>                                  
                 </div>
             : null}
             
