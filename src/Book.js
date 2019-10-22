@@ -13,7 +13,9 @@ const Book = props => {
             {rented ? 
                 <div>
                     <p> Renting by {renter.username} </p> 
-                    <p> Rented at {rentedAt} </p>                     
+                    <p> Rented at {rentedAt} </p> 
+                    <p> Promised return date {returnDate} </p>                     
+                                        
                 </div>
             : null}
             

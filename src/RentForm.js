@@ -25,12 +25,12 @@ class RentForm extends Component {
         return ( 
             <div className='form-wrapper'>
                 <div className='form'>
-                    {rentingBook[0] ? <h4>Updating {rentingBook[0].title }</h4> : null}
+                    {rentingBook[0] ? <h4>{rentingBook[0].rented ? 'Returning' : 'Renting' } {rentingBook[0].title }</h4> : null}
                     <input onChange={this.handleInput} type="text" name="username" placeholder="Username" 
                         value={this.state.renter.username}/>
                     <input onChange={this.handleInput} type="text" name="memberNo" placeholder="Membership No." 
                         value={this.state.renter.memberNo}/>       
-                    <button onClick={() => updateBook(rentingBook[0].id, renter)}>Update</button>    
+                    <button onClick={() => updateBook(rentingBook[0].id, renter)}>{rentingBook[0].rented ? 'Return' : 'Rent'}</button>    
                     {error.length > 0 ? <p className='error'>{error}</p> : null}         
                 </div>
             </div>
