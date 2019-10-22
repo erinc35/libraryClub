@@ -19,7 +19,7 @@ class RentForm extends Component {
     }
 
     render() { 
-        const { rentingBook, updateBook, error } = this.props;
+        const { rentingBook, updateBook, error, handleCheckout } = this.props;
         const { renter } = this.state;
         
         return ( 
@@ -34,7 +34,13 @@ class RentForm extends Component {
                     value={ renter.promisedReturnDate} /> : null }
              
                     <button onClick={() => updateBook(rentingBook[0].id, renter)}>{rentingBook[0].rented ? 'Return' : 'Rent'}</button>    
-                    {error.length > 0 ? <p className='error'>{error}</p> : null}         
+                    {error.login ? <p className='error'>{error.login}</p> : null}       
+                    {error.payment ? 
+                        <div className='error'>
+                            <p>{error.payment}</p>
+                            <button onClick={() => handleCheckout(rentingBook[0].id)}>Pay</button>
+                        </div> 
+                    : null}                               
                 </div>
             </div>
          );

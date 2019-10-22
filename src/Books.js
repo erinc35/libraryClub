@@ -16,7 +16,7 @@ class Books extends Component {
                 { id: 5, title: 'The Trial', author: 'Franz Kafka',renting: false, rented: false, returned: true, renter: '', rentedAt: '' }
             ],
             rentFormShown: false,
-            error: '',
+            error: { login: '', payment: ''},
          }
     }
 
@@ -26,10 +26,18 @@ class Books extends Component {
         clonedBooks.map(book => book.renting = false)
         const ind = clonedBooks.findIndex(book => book.id === id)
         clonedBooks[ind].renting = !clonedBooks[ind].renting;
-        this.setState({ books: clonedBooks })
+        this.setState({ books: clonedBooks, error: '' })
         this.setState(prevState => ({
             rentFormShown: !prevState.rentFormShown
         }))
+    }
+
+    handleCheckout = (id) => {
+        let clonedBooks = this.state.books.slice();
+        const ind = clonedBooks.findIndex(book => book.id === id)
+        clonedBooks[ind].rented = false;
+        clonedBooks[ind].renting = false;
+        this.setState({ rentFormShown: false, books: clonedBooks, error: '', currentRenter: '' })
     }
 
     updateBook = (id, renter) => {
@@ -47,9 +55,25 @@ class Books extends Component {
             clonedBooks[ind].renter = '';
             clonedBooks[ind].rentedAt = ''
             let currentRenter = this.state.currentRenter;
+            // console.log(new Date(currentRenter.promisedReturnDate.toString().toISOString().slice(0, 10)) < new Date().toISOString().slice(0, 10)) 
+            
             if (currentRenter.username !== renter.username || currentRenter.memberNo !== renter.memberNo){
-                this.setState({ ...this.state.books, error: 'Please check the username or memberNo'})
-            }else{
+                this.setState({ 
+                    error: {
+                        ...this.state.error,
+                        login: 'Please check your credentials.'
+                    }
+                })
+            } else if (new Date(currentRenter.promisedReturnDate.toString()).toISOString().slice(0, 10) < new Date().toISOString().slice(0, 10)){
+                this.setState({
+                    error: {
+                        ...this.state.error,
+                        login: '',
+                        payment: 'You have a balance of $5 due to late return.'
+                    }
+                })              
+            }
+            else{
                 clonedBooks[ind].rented = false;                
                 clonedBooks[ind].renting = false;                
                 this.setState({ rentFormShown: false, books: clonedBooks, error: '', currentRenter: '' })
@@ -61,11 +85,11 @@ class Books extends Component {
     render() { 
         const { books, rentFormShown, currentRenter, error } = this.state;
         const rentingBook = books.filter(book => book.renting)
-
+        
         return ( 
             <div className='main-wrapper'>
                 <div className='forms'>
-                    {rentFormShown ? <RentForm rentingBook={rentingBook} updateBook={this.updateBook} currentRenter={currentRenter} error={error} /> : null}
+                    {rentFormShown ? <RentForm rentingBook={rentingBook} updateBook={this.updateBook} handleCheckout={this.handleCheckout} currentRenter={currentRenter} error={error} /> : null}
                 </div>
                 <div className='books-wrapper'>   
                     {books.map(book => {
