@@ -30,8 +30,8 @@ class RentForm extends Component {
                         value={ renter.username}/>
                     <input onChange={this.handleInput} type="text" name="memberNo" placeholder="Membership No." 
                         value={ renter.memberNo}/> 
-                    <input onChange={this.handleInput} type="text" name="promisedReturnDate" placeholder="Promised Return Date"
-                        value={ renter.promisedReturnDate} />
+                    {!rentingBook[0].rented ? <input onChange={this.handleInput} type="text" name="promisedReturnDate" placeholder="Promised Return Date"
+                    value={ renter.promisedReturnDate} /> : null }
              
                     <button onClick={() => updateBook(rentingBook[0].id, renter)}>{rentingBook[0].rented ? 'Return' : 'Rent'}</button>    
                     {error.length > 0 ? <p className='error'>{error}</p> : null}         
