@@ -105,6 +105,7 @@ class Books extends Component {
         
         return ( 
             <div className='main-wrapper'>
+            <h1>Welcome to Infrrd Library</h1>
                 <div className='forms'>
                     {rentFormShown ? <RentForm rentingBook={rentingBook} updateBook={this.updateBook} handleCheckout={this.handleCheckout} currentRenter={currentRenter} error={error} /> : null}
                 </div>

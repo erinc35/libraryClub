@@ -4,10 +4,9 @@ import './App.css';
 
 const Book = props => {
     const { id, title, author, rented, renter, rentedAt } = props.bookData
-    // console.log(p);
-    
+    const style = { 'backgroundColor': 'grey'}
     return (
-        <div className='book'>
+        <div className='book' style={rented ? style : null }>
             <h2>{title}</h2>
             <h4>{author}</h4>   
             <button onClick={() => props.toggleRentForm(id)}>{!rented ? 'Rent' : 'Return'}</button> 
