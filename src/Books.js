@@ -17,6 +17,7 @@ class Books extends Component {
             ],
             rentFormShown: false,
             error: { login: '', payment: ''},
+            currentRenter: ''
          }
     }
 
@@ -44,20 +45,36 @@ class Books extends Component {
         let clonedBooks = this.state.books.slice();
         const ind = clonedBooks.findIndex(book => book.id === id)
         if (!clonedBooks[ind].rented){
-            clonedBooks[ind].rented = true;
-            clonedBooks[ind].returned = false;
-            clonedBooks[ind].renting = false;
-            clonedBooks[ind].renter = renter;
-            clonedBooks[ind].rentedAt = new Date().toISOString().slice(0, 10)
-            this.setState({ rentFormShown: false, books: clonedBooks, currentRenter: renter })
+            if (renter.username === '' || renter.memberNo === '' || renter.promisedReturnDate === '') {
+                this.setState({
+                    error: {
+                        ...this.state.error,
+                        login: 'Please complete all fields.'
+                    }
+                })
+            }else{
+                clonedBooks[ind].rented = true;
+                clonedBooks[ind].returned = false;
+                clonedBooks[ind].renting = false;
+                clonedBooks[ind].renter = renter;
+                clonedBooks[ind].rentedAt = new Date().toISOString().slice(0, 10)
+                this.setState({ rentFormShown: false, books: clonedBooks, currentRenter: renter, error: '' })
+            }
         }else {
             clonedBooks[ind].returned = true;
             clonedBooks[ind].renter = '';
             clonedBooks[ind].rentedAt = ''
             let currentRenter = this.state.currentRenter;
             // console.log(new Date(currentRenter.promisedReturnDate.toString().toISOString().slice(0, 10)) < new Date().toISOString().slice(0, 10)) 
-            
-            if (currentRenter.username !== renter.username || currentRenter.memberNo !== renter.memberNo){
+            if (currentRenter.username === '' || currentRenter.memberNo === '' || currentRenter.promisedReturnDate === ''){
+                this.setState({
+                    error: {
+                        ...this.state.error,
+                        login: 'Please complete all fields.'
+                    }
+                })
+            }
+            else if (currentRenter.username !== renter.username || currentRenter.memberNo !== renter.memberNo){
                 this.setState({ 
                     error: {
                         ...this.state.error,
