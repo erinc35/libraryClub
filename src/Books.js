@@ -44,6 +44,7 @@ class Books extends Component {
     updateBook = (id, renter) => {
         let clonedBooks = this.state.books.slice();
         const ind = clonedBooks.findIndex(book => book.id === id)
+        //Renting
         if (!clonedBooks[ind].rented){
             if (renter.username === '' || renter.memberNo === '' || renter.promisedReturnDate === '') {
                 this.setState({
@@ -60,13 +61,15 @@ class Books extends Component {
                 clonedBooks[ind].rentedAt = new Date().toISOString().slice(0, 10)
                 this.setState({ rentFormShown: false, books: clonedBooks, currentRenter: renter, error: '' })
             }
-        }else {
+        }//RETURNING
+        else {
+            
             clonedBooks[ind].returned = true;
             clonedBooks[ind].renter = '';
             clonedBooks[ind].rentedAt = ''
             let currentRenter = this.state.currentRenter;
             // console.log(new Date(currentRenter.promisedReturnDate.toString().toISOString().slice(0, 10)) < new Date().toISOString().slice(0, 10)) 
-            if (currentRenter.username === '' || currentRenter.memberNo === '' || currentRenter.promisedReturnDate === ''){
+            if (currentRenter.username === '' || currentRenter.memberNo === ''){
                 this.setState({
                     error: {
                         ...this.state.error,
