@@ -41,8 +41,24 @@ class Books extends Component {
         this.setState({ rentFormShown: false, books: clonedBooks, error: '', currentRenter: '' })
     }
 
-    rentBook = () => {
-        
+    rentBook = (id, renter) => {
+        let clonedBooks = this.state.books.slice();
+        const ind = clonedBooks.findIndex(book => book.id === id)
+        if (renter.username === '' || renter.memberNo === '' || renter.promisedReturnDate === '') {
+            this.setState({
+                error: {
+                    ...this.state.error,
+                    login: 'Please complete all fields.'
+                }
+            })
+        } else {
+            clonedBooks[ind].rented = true;
+            clonedBooks[ind].returned = false;
+            clonedBooks[ind].renting = false;
+            clonedBooks[ind].renter = renter;
+            clonedBooks[ind].rentedAt = new Date().toISOString().slice(0, 10)
+            this.setState({ rentFormShown: false, books: clonedBooks, currentRenter: renter, error: '' })
+        }
     }
 
     updateBook = (id, renter) => {
@@ -50,21 +66,7 @@ class Books extends Component {
         const ind = clonedBooks.findIndex(book => book.id === id)
         //Renting
         if (!clonedBooks[ind].rented){
-            if (renter.username === '' || renter.memberNo === '' || renter.promisedReturnDate === '') {
-                this.setState({
-                    error: {
-                        ...this.state.error,
-                        login: 'Please complete all fields.'
-                    }
-                })
-            }else{
-                clonedBooks[ind].rented = true;
-                clonedBooks[ind].returned = false;
-                clonedBooks[ind].renting = false;
-                clonedBooks[ind].renter = renter;
-                clonedBooks[ind].rentedAt = new Date().toISOString().slice(0, 10)
-                this.setState({ rentFormShown: false, books: clonedBooks, currentRenter: renter, error: '' })
-            }
+            this.rentBook(id, renter)
         }//RETURNING
         else {
             
