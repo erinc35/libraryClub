@@ -61,6 +61,10 @@ class Books extends Component {
         }
     }
 
+    returnBook = () => {
+        
+    }
+
     updateBook = (id, renter) => {
         let clonedBooks = this.state.books.slice();
         const ind = clonedBooks.findIndex(book => book.id === id)
