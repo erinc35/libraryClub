@@ -61,8 +61,43 @@ class Books extends Component {
         }
     }
 
-    returnBook = () => {
-        
+    returnBook = (id, renter) => {
+        let clonedBooks = this.state.books.slice();    
+        const ind = clonedBooks.findIndex(book => book.id === id)            
+        clonedBooks[ind].returned = true;
+        clonedBooks[ind].renter = '';
+        clonedBooks[ind].rentedAt = ''
+        let currentRenter = this.state.currentRenter;
+        // console.log(new Date(currentRenter.promisedReturnDate.toString().toISOString().slice(0, 10)) < new Date().toISOString().slice(0, 10)) 
+        if (currentRenter.username === '' || currentRenter.memberNo === '') {
+            this.setState({
+                error: {
+                    ...this.state.error,
+                    login: 'Please complete all fields.'
+                }
+            })
+        }
+        else if (currentRenter.username !== renter.username || currentRenter.memberNo !== renter.memberNo) {
+            this.setState({
+                error: {
+                    ...this.state.error,
+                    login: 'Please check your credentials.'
+                }
+            })
+        } else if (new Date(currentRenter.promisedReturnDate.toString()).toISOString().slice(0, 10) < new Date().toISOString().slice(0, 10)) {
+            this.setState({
+                error: {
+                    ...this.state.error,
+                    login: '',
+                    payment: 'You have a balance of $5 due to late return.'
+                }
+            })
+        }
+        else {
+            clonedBooks[ind].rented = false;
+            clonedBooks[ind].renting = false;
+            this.setState({ rentFormShown: false, books: clonedBooks, error: '', currentRenter: '' })
+        }
     }
 
     updateBook = (id, renter) => {
@@ -73,41 +108,7 @@ class Books extends Component {
             this.rentBook(id, renter)
         }//RETURNING
         else {
-            
-            clonedBooks[ind].returned = true;
-            clonedBooks[ind].renter = '';
-            clonedBooks[ind].rentedAt = ''
-            let currentRenter = this.state.currentRenter;
-            // console.log(new Date(currentRenter.promisedReturnDate.toString().toISOString().slice(0, 10)) < new Date().toISOString().slice(0, 10)) 
-            if (currentRenter.username === '' || currentRenter.memberNo === ''){
-                this.setState({
-                    error: {
-                        ...this.state.error,
-                        login: 'Please complete all fields.'
-                    }
-                })
-            }
-            else if (currentRenter.username !== renter.username || currentRenter.memberNo !== renter.memberNo){
-                this.setState({ 
-                    error: {
-                        ...this.state.error,
-                        login: 'Please check your credentials.'
-                    }
-                })
-            } else if (new Date(currentRenter.promisedReturnDate.toString()).toISOString().slice(0, 10) < new Date().toISOString().slice(0, 10)){
-                this.setState({
-                    error: {
-                        ...this.state.error,
-                        login: '',
-                        payment: 'You have a balance of $5 due to late return.'
-                    }
-                })              
-            }
-            else{
-                clonedBooks[ind].rented = false;                
-                clonedBooks[ind].renting = false;                
-                this.setState({ rentFormShown: false, books: clonedBooks, error: '', currentRenter: '' })
-            }
+            this.returnBook(id, renter)
         }
         
     }
