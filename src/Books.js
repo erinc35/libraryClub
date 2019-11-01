@@ -68,7 +68,6 @@ class Books extends Component {
         clonedBooks[ind].renter = '';
         clonedBooks[ind].rentedAt = ''
         let currentRenter = this.state.currentRenter;
-        // console.log(new Date(currentRenter.promisedReturnDate.toString().toISOString().slice(0, 10)) < new Date().toISOString().slice(0, 10)) 
         if (currentRenter.username === '' || currentRenter.memberNo === '') {
             this.setState({
                 error: {
